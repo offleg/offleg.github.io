@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Offleg LLP</title>
-  <meta name="description" content="Offleg — Building things, one app at a time.">
-  <link rel="icon" type="image/png" href="icons/offleg.png">
-  <link rel="apple-touch-icon" href="icons/offleg.png">
+  <title>OffLeg LLP</title>
+  <meta name="description" content="OffLeg — Software, off the legacy track.">
+  <link rel="icon" type="image/png" href="icons/offleg_light.png">
+  <link rel="apple-touch-icon" href="icons/offleg_light.png">
   <style>
     *,
     *::before,
@@ -209,9 +209,9 @@
   </button>
 
   <div class="container">
-    <img src="icons/offleg.png" alt="Offleg icon" class="brand-icon">
-    <h1 class="brand">Offleg LLP</h1>
-    <p class="subtitle">Fairly Serious.</p>
+    <img src="icons/offleg_light.png" alt="OffLeg icon" class="brand-icon" id="brand-icon">
+    <h1 class="brand">OffLeg LLP</h1>
+    <p class="subtitle">Software, off the legacy track.</p>
 
     <div class="apps">
       <div class="app-card">
@@ -245,12 +245,24 @@
   </div>
 
   <script>
+    function updateIcon() {
+      var theme = document.documentElement.getAttribute('data-theme');
+      var icon = document.getElementById('brand-icon');
+      var favicon = document.querySelector('link[rel="icon"]');
+      var appleIcon = document.querySelector('link[rel="apple-touch-icon"]');
+      var src = theme === 'light' ? 'icons/offleg.png' : 'icons/offleg_light.png';
+      icon.src = src;
+      favicon.href = src;
+      appleIcon.href = src;
+    }
+
     function toggleTheme() {
       var html = document.documentElement;
       var current = html.getAttribute('data-theme');
       var next = current === 'dark' ? 'light' : 'dark';
       html.setAttribute('data-theme', next);
       localStorage.setItem('theme', next);
+      updateIcon();
     }
 
     (function () {
@@ -261,6 +273,7 @@
         var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         document.documentElement.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
       }
+      updateIcon();
     })();
   </script>
 </body>
