@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WordRun! - Real-Time Multiplayer Word Game | OffLeg</title>
+  <meta name="description" content="WordRun is a live multiplayer word game for 2-4 players. Swipe scrambled letters arranged in a circle to build words before your friends do, across 90-second rounds. Free on iOS and Android.">
+  <link rel="canonical" href="https://offleg.com/wordrun/">
+  <link rel="icon" type="image/png" href="../icons/wordrun.png">
+  <link rel="apple-touch-icon" href="../icons/wordrun.png">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="OffLeg">
+  <meta property="og:title" content="WordRun! - Real-Time Multiplayer Word Game">
+  <meta property="og:description" content="Swipe scrambled letters arranged in a circle to build words before your friends do. 2-4 players, live, 90-second rounds. Free on iOS and Android.">
+  <meta property="og:image" content="https://offleg.com/wordrun/img/og.webp">
+  <meta property="og:url" content="https://offleg.com/wordrun/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="WordRun! - Real-Time Multiplayer Word Game">
+  <meta name="twitter:description" content="Swipe scrambled letters arranged in a circle to build words before your friends do. 2-4 players, live, 90-second rounds.">
+  <meta name="twitter:image" content="https://offleg.com/wordrun/img/og.webp">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "MobileApplication",
+    "name": "WordRun!",
+    "alternateName": "WordRun",
+    "url": "https://offleg.com/wordrun/",
+    "description": "WordRun is a real-time multiplayer word game for 2-4 players. Swipe to connect scrambled letters arranged in a circle and form words before your friends do, across timed rounds.",
+    "applicationCategory": "GameApplication",
+    "applicationSubCategory": "Word Game",
+    "operatingSystem": "iOS, Android",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "OffLeg LLP",
+      "url": "https://offleg.com/"
+    }
+  }
+  </script>
+
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #000;
+      --text: #fff;
+      --text-muted: #8a8a8a;
+      --border: #222;
+      --badge-bg: #1a1a1a;
+      --badge-text: #aaa;
+      --toggle-bg: #1a1a1a;
+      --card-bg: #0a0a0a;
+      --accent: #2AA8D6;
+      --accent-2: #F4B400;
+    }
+
+    [data-theme="light"] {
+      --bg: #fff;
+      --text: #000;
+      --text-muted: #666;
+      --border: #e5e5e5;
+      --badge-bg: #f0f0f0;
+      --badge-text: #666;
+      --toggle-bg: #f0f0f0;
+      --card-bg: #f8f8f8;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      transition: background 0.3s ease, color 0.3s ease;
+      line-height: 1.5;
+    }
+
+    a { color: inherit; }
+
+    .theme-toggle {
+      position: fixed;
+      top: 1.5rem;
+      right: 1.5rem;
+      background: var(--toggle-bg);
+      border: 1px solid var(--border);
+      border-radius: 2rem;
+      width: 3.25rem;
+      height: 1.75rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      padding: 0.2rem;
+      z-index: 10;
+      transition: background 0.3s ease, border-color 0.3s ease;
+    }
+
+    .theme-toggle .knob {
+      width: 1.25rem;
+      height: 1.25rem;
+      border-radius: 50%;
+      background: var(--text);
+      transition: transform 0.3s ease, background 0.3s ease;
+    }
+
+    [data-theme="light"] .theme-toggle .knob { transform: translateX(1.5rem); }
+
+    header.topbar {
+      max-width: 44rem;
+      margin: 0 auto;
+      padding: 1.5rem 1.5rem 0;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      text-decoration: none;
+    }
+
+    .back-link:hover { color: var(--text); }
+
+    main {
+      max-width: 44rem;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 4rem;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 2rem 0 2.5rem;
+    }
+
+    .brand-icon {
+      width: 5rem;
+      height: 5rem;
+      border-radius: 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+
+    h1.brand {
+      font-size: 2.5rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.75rem;
+    }
+
+    .tagline {
+      font-size: 1.0625rem;
+      color: var(--text-muted);
+      max-width: 30rem;
+      margin: 0 auto 2rem;
+    }
+
+    .store-links {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .store-option {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      width: 8.75rem;
+    }
+
+    .store-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 2.5rem;
+      line-height: 0;
+    }
+
+    .store-badge { display: block; width: auto; height: 2.5rem; }
+    .store-badge-google { height: 3.7rem; }
+    .store-qr { display: block; width: 4.5rem; height: 4.5rem; }
+
+    section { margin: 3.5rem 0; }
+
+    h2.section-title {
+      font-size: 1.375rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin-bottom: 1.25rem;
+    }
+
+    .lede {
+      color: var(--text-muted);
+      font-size: 1rem;
+      max-width: 38rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .shots {
+      display: flex;
+      gap: 1rem;
+      overflow-x: auto;
+      padding: 0.5rem 0 1rem;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+    }
+
+    .shots img {
+      flex: 0 0 auto;
+      height: 22rem;
+      width: auto;
+      border-radius: 1rem;
+      border: 1px solid var(--border);
+      background: var(--card-bg);
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+
+    .feature-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 0.75rem;
+      padding: 1.25rem;
+    }
+
+    .feature-card .num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.75rem;
+      height: 1.75rem;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.8125rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .feature-card p {
+      font-size: 0.9375rem;
+      color: var(--text-muted);
+    }
+
+    .faq-item {
+      border-top: 1px solid var(--border);
+      padding: 1.25rem 0;
+    }
+
+    .faq-item:last-child { border-bottom: 1px solid var(--border); }
+
+    .faq-item h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .faq-item p {
+      font-size: 0.9375rem;
+      color: var(--text-muted);
+    }
+
+    footer {
+      max-width: 44rem;
+      margin: 0 auto;
+      padding: 0 1.5rem 3rem;
+      text-align: center;
+    }
+
+    .divider {
+      width: 2rem;
+      height: 1px;
+      background: var(--border);
+      margin: 0 auto 1.5rem;
+    }
+
+    .contact {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+
+    .contact a {
+      color: var(--text);
+      text-decoration: none;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .contact a:hover { border-color: var(--text); }
+
+    .cross-promo {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      margin-top: 1rem;
+    }
+
+    .cross-promo a {
+      text-decoration: none;
+      border-bottom: 1px solid var(--border);
+    }
+
+    @media (max-width: 480px) {
+      h1.brand { font-size: 2rem; }
+      .feature-grid { grid-template-columns: 1fr; }
+      .shots img { height: 18rem; }
+    }
+  </style>
+</head>
+<body>
+  <button class="theme-toggle" aria-label="Toggle theme" onclick="toggleTheme()">
+    <span class="knob"></span>
+  </button>
+
+  <header class="topbar">
+    <a class="back-link" href="../">&larr; OffLeg</a>
+  </header>
+
+  <main>
+    <div class="hero">
+      <img src="../icons/wordrun.png" alt="WordRun icon" class="brand-icon" id="brand-icon">
+      <h1 class="brand">WordRun!</h1>
+      <p class="tagline">The real-time multiplayer word game. Race friends live to build words from scrambled letters - 2 to 4 players, 90-second rounds, no sign-up required.</p>
+
+      <div class="store-links" aria-label="Download WordRun">
+        <div class="store-option">
+          <a class="store-link" href="https://apps.apple.com/app/id6779561780" target="_blank" rel="noopener noreferrer" aria-label="Download WordRun on the App Store">
+            <img class="store-badge" src="../icons/app-store-badge.svg" alt="Download on the App Store">
+          </a>
+          <img class="store-qr" src="../icons/app-store-qr.png" alt="QR code for WordRun on the App Store">
+        </div>
+        <div class="store-option">
+          <a class="store-link" href="https://play.google.com/store/apps/details?id=com.companyish.wordrun" target="_blank" rel="noopener noreferrer" aria-label="Get WordRun on Google Play">
+            <img class="store-badge store-badge-google" src="../icons/google-play-badge.png" alt="Get it on Google Play">
+          </a>
+          <img class="store-qr" src="../icons/google-play-qr.png" alt="QR code for WordRun on Google Play">
+        </div>
+      </div>
+    </div>
+
+    <section aria-label="Screenshots">
+      <div class="shots">
+        <img src="img/landing.webp" alt="WordRun welcome screen with Create Room and Join Room options" loading="lazy">
+        <img src="img/game.webp" alt="WordRun gameplay screen showing scrambled letters arranged in a circle during a live round" loading="lazy">
+        <img src="img/lobby.webp" alt="WordRun lobby screen showing a shareable room code and connected players" loading="lazy">
+        <img src="img/howtoplay.webp" alt="WordRun how to play screen explaining the rules" loading="lazy">
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">What it is</h2>
+      <p class="lede">WordRun drops 2 to 4 players into the same round at the same time. Eight, nine, or ten letters appear in a circle - swipe across them to connect letters and spell real words before the clock runs out or someone else claims the same word first. No boards, no turns, just everyone racing the same letters live.</p>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <span class="num">1</span>
+          <p>Create a room and share the code, or join a friend's with theirs. No account or sign-up needed to play.</p>
+        </div>
+        <div class="feature-card">
+          <span class="num">2</span>
+          <p>Swipe across the letter circle to form 3 to 10 letter words within each 90-second round.</p>
+        </div>
+        <div class="feature-card">
+          <span class="num">3</span>
+          <p>Longer words and using every letter on the board score more - but the same word claimed twice pays less the second time.</p>
+        </div>
+        <div class="feature-card">
+          <span class="num">4</span>
+          <p>Play three rounds per game and see who comes out on top of the scorecard.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">FAQ</h2>
+      <div class="faq-item">
+        <h3>Is WordRun free?</h3>
+        <p>Yes, WordRun is free to download and play on both iOS and Android.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Do I need to create an account?</h3>
+        <p>No. Pick a display name and you're in - there's no sign-up or login to start a game.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Can iPhone and Android players play together?</h3>
+        <p>Yes. Rooms run on the same live backend regardless of platform, so an iOS player and an Android player can join the same room and play in real time.</p>
+      </div>
+      <div class="faq-item">
+        <h3>How many players does a game need?</h3>
+        <p>Each room supports 2 to 4 players. Create a room, share the code with as many friends as you have, and start whenever everyone's in.</p>
+      </div>
+      <div class="faq-item">
+        <h3>What happens if I lose connection mid-round?</h3>
+        <p>Rooms are live over a real-time connection, so reconnecting takes you back into the round in progress.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="divider"></div>
+    <p class="contact">Get in touch - <a href="mailto:contact@offleg.com">contact@offleg.com</a></p>
+    <p class="cross-promo">From the makers of <a href="../foodprints/">Foodprints</a>, a food memory app.</p>
+  </footer>
+
+  <script>
+    function updateIcon() {
+      var theme = document.documentElement.getAttribute('data-theme');
+      var favicon = document.querySelector('link[rel="icon"]');
+      var appleIcon = document.querySelector('link[rel="apple-touch-icon"]');
+      var src = '../icons/wordrun.png';
+      favicon.href = src;
+      appleIcon.href = src;
+    }
+
+    function toggleTheme() {
+      var html = document.documentElement;
+      var current = html.getAttribute('data-theme');
+      var next = current === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      updateIcon();
+    }
+
+    (function () {
+      var saved = localStorage.getItem('theme');
+      if (saved) {
+        document.documentElement.setAttribute('data-theme', saved);
+      } else {
+        var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        document.documentElement.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+      }
+      updateIcon();
+    })();
+  </script>
+</body>
+</html>
