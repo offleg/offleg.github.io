@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Easy Workout Logger - Simple Gym Log | OffLeg</title>
+  <meta name="description" content="Like pen and paper—but better. Easy Workout Logger is a no-fuss gym log: start a workout, pick the exercise, add weight and reps, save. Weight in kg or lbs, bodyweight and to-failure sets, full workout history. Free on the App Store.">
+  <link rel="canonical" href="https://offleg.com/easyworkoutlogger/">
+  <link rel="icon" type="image/png" href="../icons/easyworkoutlogger.png">
+  <link rel="apple-touch-icon" href="../icons/easyworkoutlogger.png">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="OffLeg">
+  <meta property="og:title" content="Easy Workout Logger - Simple Gym Log">
+  <meta property="og:description" content="Like pen and paper—but better. Begin workout. Pick the exercise. Add weight and reps. Save.">
+  <meta property="og:image" content="https://offleg.com/easyworkoutlogger/img/og.webp">
+  <meta property="og:url" content="https://offleg.com/easyworkoutlogger/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Easy Workout Logger - Simple Gym Log">
+  <meta name="twitter:description" content="Like pen and paper—but better. Begin workout. Pick the exercise. Add weight and reps. Save.">
+  <meta name="twitter:image" content="https://offleg.com/easyworkoutlogger/img/og.webp">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "MobileApplication",
+    "name": "Easy Workout Logger",
+    "url": "https://offleg.com/easyworkoutlogger/",
+    "description": "Easy Workout Logger is a simple gym log for iPhone and iPad. Start a workout, select an exercise, enter the weight and reps, and save - then look back through your workout history to see what you did and when.",
+    "applicationCategory": "HealthApplication",
+    "applicationSubCategory": "Health & Fitness",
+    "operatingSystem": "iOS",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "OffLeg LLP",
+      "url": "https://offleg.com/"
+    }
+  }
+  </script>
+
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #000;
+      --text: #fff;
+      --text-muted: #8a8a8a;
+      --border: #222;
+      --badge-bg: #1a1a1a;
+      --badge-text: #aaa;
+      --toggle-bg: #1a1a1a;
+      --card-bg: #0a0a0a;
+      --accent: #B9FF3A;
+      --accent-text: #000;
+    }
+
+    [data-theme="light"] {
+      --bg: #fff;
+      --text: #000;
+      --text-muted: #666;
+      --border: #e5e5e5;
+      --badge-bg: #f0f0f0;
+      --badge-text: #666;
+      --toggle-bg: #f0f0f0;
+      --card-bg: #f8f8f8;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      transition: background 0.3s ease, color 0.3s ease;
+      line-height: 1.5;
+    }
+
+    a { color: inherit; }
+
+    .theme-toggle {
+      position: fixed;
+      top: 1.5rem;
+      right: 1.5rem;
+      background: var(--toggle-bg);
+      border: 1px solid var(--border);
+      border-radius: 2rem;
+      width: 3.25rem;
+      height: 1.75rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      padding: 0.2rem;
+      z-index: 10;
+      transition: background 0.3s ease, border-color 0.3s ease;
+    }
+
+    .theme-toggle .knob {
+      width: 1.25rem;
+      height: 1.25rem;
+      border-radius: 50%;
+      background: var(--text);
+      transition: transform 0.3s ease, background 0.3s ease;
+    }
+
+    [data-theme="light"] .theme-toggle .knob { transform: translateX(1.5rem); }
+
+    header.topbar {
+      max-width: 44rem;
+      margin: 0 auto;
+      padding: 1.5rem 1.5rem 0;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      text-decoration: none;
+    }
+
+    .back-link:hover { color: var(--text); }
+
+    main {
+      max-width: 44rem;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 4rem;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 2rem 0 2.5rem;
+    }
+
+    .brand-icon {
+      width: 5rem;
+      height: 5rem;
+      border-radius: 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+
+    h1.brand {
+      font-size: 2.5rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.75rem;
+    }
+
+    .tagline {
+      font-size: 1.0625rem;
+      color: var(--text-muted);
+      max-width: 30rem;
+      margin: 0 auto 2rem;
+    }
+
+    .store-links {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .store-option {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      width: 8.75rem;
+    }
+
+    .store-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 2.5rem;
+      line-height: 0;
+    }
+
+    .store-badge { display: block; width: auto; height: 2.5rem; }
+    .store-badge-google { height: 3.7rem; }
+    .store-qr { display: block; width: 4.5rem; height: 4.5rem; }
+
+    .store-link-disabled {
+      opacity: 0.35;
+      filter: grayscale(1);
+      cursor: default;
+    }
+
+    .store-soon {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    section { margin: 3.5rem 0; }
+
+    h2.section-title {
+      font-size: 1.375rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin-bottom: 1.25rem;
+    }
+
+    .lede {
+      color: var(--text-muted);
+      font-size: 1rem;
+      max-width: 38rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .shots {
+      display: flex;
+      gap: 1rem;
+      overflow-x: auto;
+      padding: 0.5rem 0 1rem;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+    }
+
+    .shots img {
+      flex: 0 0 auto;
+      height: 22rem;
+      width: auto;
+      border-radius: 1rem;
+      border: 1px solid var(--border);
+      background: var(--card-bg);
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+
+    .feature-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 0.75rem;
+      padding: 1.25rem;
+    }
+
+    .feature-card .num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.75rem;
+      height: 1.75rem;
+      border-radius: 50%;
+      background: var(--accent);
+      color: var(--accent-text);
+      font-size: 0.8125rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .feature-card h3 {
+      font-size: 0.9375rem;
+      margin-bottom: 0.375rem;
+    }
+
+    .feature-card p {
+      font-size: 0.9375rem;
+      color: var(--text-muted);
+    }
+
+    .faq-item {
+      border-top: 1px solid var(--border);
+      padding: 1.25rem 0;
+    }
+
+    .faq-item:last-child { border-bottom: 1px solid var(--border); }
+
+    .faq-item h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .faq-item p {
+      font-size: 0.9375rem;
+      color: var(--text-muted);
+    }
+
+    footer {
+      max-width: 44rem;
+      margin: 0 auto;
+      padding: 0 1.5rem 3rem;
+      text-align: center;
+    }
+
+    .divider {
+      width: 2rem;
+      height: 1px;
+      background: var(--border);
+      margin: 0 auto 1.5rem;
+    }
+
+    .contact {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+
+    .contact a {
+      color: var(--text);
+      text-decoration: none;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .contact a:hover { border-color: var(--text); }
+
+    .cross-promo {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      margin-top: 1rem;
+    }
+
+    .cross-promo a {
+      text-decoration: none;
+      border-bottom: 1px solid var(--border);
+    }
+
+    @media (max-width: 480px) {
+      h1.brand { font-size: 2rem; }
+      .feature-grid { grid-template-columns: 1fr; }
+      .shots img { height: 18rem; }
+    }
+  </style>
+</head>
+<body>
+  <button class="theme-toggle" aria-label="Toggle theme" onclick="toggleTheme()">
+    <span class="knob"></span>
+  </button>
+
+  <header class="topbar">
+    <a class="back-link" href="../">&larr; OffLeg</a>
+  </header>
+
+  <main>
+    <div class="hero">
+      <img src="../icons/easyworkoutlogger.png" alt="Easy Workout Logger icon" class="brand-icon" id="brand-icon">
+      <h1 class="brand">Easy Workout Logger</h1>
+      <p class="tagline">Like pen and paper—but better. Begin workout, pick the exercise, add weight and reps, save - a simple gym log that keeps track of your progress without the setup.</p>
+
+      <div class="store-links" aria-label="Download Easy Workout Logger">
+        <div class="store-option">
+          <a class="store-link" href="https://apps.apple.com/app/id1610070810" target="_blank" rel="noopener noreferrer" aria-label="Download Easy Workout Logger on the App Store">
+            <img class="store-badge" src="../icons/app-store-badge.svg" alt="Download on the App Store">
+          </a>
+          <img class="store-qr" src="../icons/easyworkoutlogger-app-store-qr.png" alt="QR code for Easy Workout Logger on the App Store">
+        </div>
+        <div class="store-option">
+          <span class="store-link store-link-disabled" aria-hidden="true">
+            <img class="store-badge store-badge-google" src="../icons/google-play-badge.png" alt="">
+          </span>
+          <span class="store-soon">Coming soon on Google Play</span>
+        </div>
+      </div>
+    </div>
+
+    <section aria-label="Screenshots">
+      <div class="shots">
+        <img src="img/home.webp" alt="Easy Workout Logger home screen showing the number of workouts logged, a Let's Workout button, and the date of the last workout" loading="lazy">
+        <img src="img/history.webp" alt="Workout history screen listing past sessions such as Leg Day and Push Day with their dates and exercise counts" loading="lazy">
+        <img src="img/workout.webp" alt="Logging a set screen with exercise search, weight and reps fields, and options for bodyweight and to-failure sets" loading="lazy">
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">What it is</h2>
+      <p class="lede">A notebook works right up until you leave it at home or lose the page you were on. Easy Workout Logger keeps the same simplicity on your phone: begin a workout, select the exercise from the list, add the weight and the repetitions, save. No spreadsheet to maintain, no set-by-set setup - it's like pen and paper, only better.</p>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <span class="num">1</span>
+          <h3>Start a workout</h3>
+          <p>Name the session and start logging. The home screen keeps count of how many workouts you've done and when the last one was.</p>
+        </div>
+        <div class="feature-card">
+          <span class="num">2</span>
+          <h3>Log your sets</h3>
+          <p>Search the exercise list - bench, squat, curls - add the weight and the reps, then save. Weight is optional: mark a set as bodyweight or to failure instead.</p>
+        </div>
+        <div class="feature-card">
+          <span class="num">3</span>
+          <h3>Look back</h3>
+          <p>Workouts land in History with their date and exercise count, so you can always see what you did and when you did it.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">FAQ</h2>
+      <div class="faq-item">
+        <h3>Is Easy Workout Logger free?</h3>
+        <p>Yes, it's free to download and use on iPhone and iPad.</p>
+      </div>
+      <div class="faq-item">
+        <h3>How do I log a workout?</h3>
+        <p>Start a workout, pick the exercise from the list, enter the weight and reps, and save the set. Add as many sets as you like, then finish the workout and it goes straight into your history.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Can I log bodyweight or to-failure sets?</h3>
+        <p>Yes. Weight is optional - mark the set as bodyweight when you're not adding anything, or as to failure when you keep going until you can't.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Does it support pounds as well as kilograms?</h3>
+        <p>Yes. There's a kg / lbs switch right on the logging screen, so you can enter your sets in whichever unit your gym uses.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Is there an Android version?</h3>
+        <p>Not yet. Easy Workout Logger is on the App Store today, and a Google Play release is coming soon.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="divider"></div>
+    <p class="contact">Get in touch - <a href="mailto:contact@offleg.com">contact@offleg.com</a></p>
+    <p class="cross-promo">From the makers of <a href="../wordrun/">WordRun</a> and <a href="../foodprints/">Foodprints</a>.</p>
+  </footer>
+
+  <script>
+    function updateIcon() {
+      var favicon = document.querySelector('link[rel="icon"]');
+      var appleIcon = document.querySelector('link[rel="apple-touch-icon"]');
+      var src = '../icons/easyworkoutlogger.png';
+      favicon.href = src;
+      appleIcon.href = src;
+    }
+
+    function toggleTheme() {
+      var html = document.documentElement;
+      var current = html.getAttribute('data-theme');
+      var next = current === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      updateIcon();
+    }
+
+    (function () {
+      var saved = localStorage.getItem('theme');
+      if (saved) {
+        document.documentElement.setAttribute('data-theme', saved);
+      } else {
+        var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        document.documentElement.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+      }
+      updateIcon();
+    })();
+  </script>
+</body>
+</html>
