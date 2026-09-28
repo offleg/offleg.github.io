@@ -119,11 +119,21 @@
       margin-bottom: 3rem;
     }
 
+    .carousel {
+      margin-bottom: 2rem;
+    }
+
+    .carousel-viewport {
+      overflow: hidden;
+      border-radius: 0.75rem;
+    }
+
     .apps {
       display: flex;
-      flex-direction: column;
-      gap: 1.25rem;
-      margin-bottom: 3rem;
+      flex-direction: row;
+      gap: 0;
+      margin-bottom: 0;
+      transition: transform 0.4s ease;
     }
 
     .app-card {
@@ -136,6 +146,8 @@
       align-items: center;
       gap: 1.25rem;
       transition: background 0.3s ease, border-color 0.3s ease;
+      flex: 0 0 100%;
+      min-width: 0;
     }
 
     .app-icon {
@@ -253,6 +265,65 @@
       text-align: center;
     }
 
+    .carousel-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1.25rem;
+    }
+
+    .carousel-arrow {
+      background: var(--toggle-bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      width: 2.25rem;
+      height: 2.25rem;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1rem;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
+    }
+
+    .carousel-arrow:hover {
+      border-color: var(--text);
+    }
+
+    .carousel-arrow:disabled {
+      opacity: 0.35;
+      cursor: default;
+    }
+
+    .carousel-arrow:disabled:hover {
+      border-color: var(--border);
+    }
+
+    .carousel-dots {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .carousel-dot {
+      width: 0.5rem;
+      height: 0.5rem;
+      border-radius: 50%;
+      border: none;
+      background: var(--border);
+      cursor: pointer;
+      padding: 0;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .carousel-dot.active {
+      background: var(--text);
+      transform: scale(1.25);
+    }
+
     .divider {
       width: 2rem;
       height: 1px;
@@ -298,7 +369,9 @@
     <h1 class="brand">OffLeg LLP</h1>
     <p class="subtitle">Software, off the legacy track.</p>
 
-    <div class="apps">
+    <div class="carousel">
+      <div class="carousel-viewport">
+        <div class="apps" id="apps-track">
       <div class="app-card">
         <img src="icons/wordrun.png" alt="WordRun! icon" class="app-icon">
         <div class="app-content">
@@ -376,6 +449,11 @@
           </div>
         </div>
       </div>
+      <div class="carousel-controls">
+        <button class="carousel-arrow" id="carousel-prev" aria-label="Previous app">&#8592;</button>
+        <div class="carousel-dots" id="carousel-dots" role="tablist" aria-label="Choose app"></div>
+        <button class="carousel-arrow" id="carousel-next" aria-label="Next app">&#8594;</button>
+      </div>
     </div>
 
     <div class="divider"></div>
@@ -415,6 +493,62 @@
         document.documentElement.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
       }
       updateIcon();
+    })();
+
+    (function () {
+      var track = document.getElementById('apps-track');
+      var prev = document.getElementById('carousel-prev');
+      var next = document.getElementById('carousel-next');
+      var dotsWrap = document.getElementById('carousel-dots');
+      if (!track || !prev || !next || !dotsWrap) return;
+      var cards = track.children.length;
+      var index = 0;
+      var startX = null;
+
+      for (var i = 0; i < cards; i++) {
+        (function (dotIndex) {
+          var dot = document.createElement('button');
+          dot.className = 'carousel-dot';
+          dot.setAttribute('aria-label', 'Show app ' + (dotIndex + 1));
+          dot.addEventListener('click', function () { goTo(dotIndex); });
+          dotsWrap.appendChild(dot);
+        })(i);
+      }
+      var dots = dotsWrap.children;
+
+      function goTo(i) {
+        index = (i + cards) % cards;
+        track.style.transform = 'translateX(-' + (index * 100) + '%)';
+        for (var j = 0; j < dots.length; j++) {
+          dots[j].classList.toggle('active', j === index);
+          dots[j].setAttribute('aria-selected', j === index ? 'true' : 'false');
+        }
+        prev.disabled = index === 0;
+        next.disabled = index === cards - 1;
+      }
+
+      prev.addEventListener('click', function () { goTo(index - 1); });
+      next.addEventListener('click', function () { goTo(index + 1); });
+
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowLeft') goTo(index - 1);
+        if (e.key === 'ArrowRight') goTo(index + 1);
+      });
+
+      var viewport = track.parentElement;
+      viewport.addEventListener('touchstart', function (e) {
+        startX = e.touches[0].clientX;
+      }, { passive: true });
+      viewport.addEventListener('touchend', function (e) {
+        if (startX === null) return;
+        var dx = e.changedTouches[0].clientX - startX;
+        if (Math.abs(dx) > 40) {
+          goTo(index + (dx < 0 ? 1 : -1));
+        }
+        startX = null;
+      }, { passive: true });
+
+      goTo(0);
     })();
   </script>
 </body>
