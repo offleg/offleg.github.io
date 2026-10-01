@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Get Foodprints: Food Memories on Google Play</title>
+  <meta name="robots" content="noindex">
+  <link rel="canonical" href="https://offleg.com/foodprints/">
+  <style>
+    body { margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center;
+           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+           background: #1c1612; color: #fff4e8; text-align: center; }
+    .box { padding: 32px 24px; max-width: 360px; }
+    img { width: 96px; height: 96px; border-radius: 22px; }
+    h1 { font-size: 22px; margin: 18px 0 6px; }
+    p { margin: 0 0 24px; color: #d6c4b2; }
+    a.btn { display: inline-block; background: #e67f22; color: #fff; text-decoration: none;
+            font-weight: 600; padding: 14px 28px; border-radius: 999px; }
+    .small { margin-top: 18px; font-size: 13px; color: #a8968a; }
+    .small a { color: #d6c4b2; }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <img src="../../icons/foodprints.png" alt="Foodprints">
+    <h1>Foodprints: Food Memories</h1>
+    <p>Remember the food you loved. In seconds. Forever.</p>
+    <a class="btn" id="open" href="https://play.google.com/store/apps/details?id=com.companyish.foodprints">Get it on Google Play</a>
+    <div class="small">On iPhone? <a href="https://apps.apple.com/app/id6780929248">Get it on the App Store</a></div>
+  </div>
+  <script>
+    // Instagram and other in-app browsers show the web version of the Play Store
+    // instead of opening the Play Store app. On Android, ask the phone to open
+    // the Play Store app directly; if that is not possible, the button above still works.
+    (function () {
+      var pkg = 'com.companyish.foodprints';
+      var web = 'https://play.google.com/store/apps/details?id=' + pkg;
+      var ua = navigator.userAgent || '';
+      if (/iPhone|iPad|iPod/i.test(ua)) {
+        window.location.replace('https://apps.apple.com/app/id6780929248');
+        return;
+      }
+      if (/Android/i.test(ua)) {
+        var intent = 'intent://details?id=' + pkg +
+          '#Intent;scheme=market;package=com.android.vending;S.browser_fallback_url=' +
+          encodeURIComponent(web) + ';end';
+        document.getElementById('open').href = intent;
+        window.location.href = intent;
+      }
+    })();
+  </script>
+</body>
+</html>
