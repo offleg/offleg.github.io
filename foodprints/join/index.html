@@ -14,7 +14,7 @@
   <!-- No server call, no tracking, no outside scripts or fonts. Only the one
        inline script at the end of the page may run: the sha256 below is its
        hash, and must be recomputed whenever that script changes. -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'unsafe-inline'; script-src 'sha256-a1En3P4wmGVw116hd+gzPjHdNUQ0qW1YI1MFls8bw8I='; base-uri 'none'; form-action 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'unsafe-inline'; script-src 'sha256-otRhakMLyf7D4krwqj1Zt+wau8R+0fBcljIiDVhJsDI='; base-uri 'none'; form-action 'none'">
   <link rel="icon" type="image/png" href="../../icons/foodprints.png">
   <link rel="apple-touch-icon" href="../../icons/foodprints.png">
   <style>
@@ -115,7 +115,7 @@
   <main>
     <img class="logo" src="../../icons/foodprints.png" alt="" width="72" height="72">
     <h1>You're invited to see someone's food memories on Foodprints.</h1>
-    <a class="button" id="open-app" href="./">Open in Foodprints</a>
+    <a class="button" id="open-app" href="./" hidden>Open in Foodprints</a>
 
     <p class="muted" id="get-app">Don't have the app yet? Get it here:</p>
     <ul class="stores" aria-labelledby="get-app">
@@ -148,17 +148,24 @@
 
       var linkQuery = isWholeCode ? '?code=' + code : '';
       var openApp = document.getElementById('open-app');
-      openApp.href = window.location.pathname + linkQuery;
 
       if (isWholeCode) {
         document.getElementById('code').textContent = code.slice(0, 4) + '-' + code.slice(4);
         document.getElementById('code-line').hidden = false;
       }
 
-      // Safari does not open the app for a link to the page it is already on,
-      // but Chrome on Android can be asked to open the app directly. If the
-      // app is not installed, it goes to the Play Store.
+      // The "Open in Foodprints" button is hidden until it is known to work,
+      // and it only works on Android: Chrome there can be asked to open the
+      // app directly, and if the app is not installed it goes to the Play
+      // Store. Everywhere else the button would only reload this page. Safari
+      // does not open the app for a link to the page it is already on, and
+      // nothing a static page can do hands the code to the app from Safari
+      // reliably (a Smart App Banner can only be given its code by a server,
+      // and this page has none). Those visitors have the instruction line
+      // below and the store links. Phones that have the app open the link in
+      // the app without ever showing this page.
       if (/Android/i.test(navigator.userAgent)) {
+        openApp.hidden = false;
         openApp.href = 'intent://offleg.com/foodprints/join/' + linkQuery +
           '#Intent;scheme=https;package=com.companyish.foodprints;S.browser_fallback_url=' +
           encodeURIComponent(PLAY_STORE) + ';end';
