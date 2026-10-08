@@ -1,0 +1,6 @@
+# offleg.com is built by GitHub Pages' Jekyll, which skips every folder whose
+# name starts with a dot. The phones check two files under /.well-known/ to
+# allow https://offleg.com/foodprints/join/ links to open the Foodprints app,
+# so that folder must be published.
+include:
+  - .well-known

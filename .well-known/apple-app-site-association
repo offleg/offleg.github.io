@@ -1,0 +1,21 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["CJZVRMNZGF.com.companyish.foodprints"],
+        "components": [
+          {
+            "/": "/foodprints/join/*",
+            "?": { "code": "?*" },
+            "comment": "Foodprints sharing: https://offleg.com/foodprints/join/?code=XXXXXXXX opens the join screen."
+          },
+          {
+            "/": "/foodprints/join",
+            "?": { "code": "?*" },
+            "comment": "The same link without the trailing slash."
+          }
+        ]
+      }
+    ]
+  }
+}

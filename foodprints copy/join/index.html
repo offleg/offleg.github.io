@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#09090a" media="(prefers-color-scheme: dark)">
+  <title>You're invited to see someone's food memories on Foodprints</title>
+  <meta name="robots" content="noindex">
+  <!-- The share code is in this page's address. Keep it out of the Referer
+       header that the store links would otherwise send. -->
+  <meta name="referrer" content="no-referrer">
+  <!-- No server call, no tracking, no outside scripts or fonts. Only the one
+       inline script at the end of the page may run: the sha256 below is its
+       hash, and must be recomputed whenever that script changes. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; style-src 'unsafe-inline'; script-src 'sha256-a1En3P4wmGVw116hd+gzPjHdNUQ0qW1YI1MFls8bw8I='; base-uri 'none'; form-action 'none'">
+  <link rel="icon" type="image/png" href="../../icons/foodprints.png">
+  <link rel="apple-touch-icon" href="../../icons/foodprints.png">
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #ffffff;
+      --surface: #ffffff;
+      --text: #0c0d0e;
+      --muted: #5d6168;
+      --border: #e5e7ea;
+      --accent: #e67e22;
+      --accent-text: #0c0d0e;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #09090a;
+        --surface: #141517;
+        --text: #f3f4f5;
+        --muted: #9ba0a7;
+        --border: #25272b;
+      }
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      padding-left: max(1rem, env(safe-area-inset-left));
+      padding-right: max(1rem, env(safe-area-inset-right));
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.5;
+      background: var(--bg);
+      color: var(--text);
+      -webkit-text-size-adjust: 100%;
+    }
+    main {
+      width: 100%;
+      max-width: 28rem;
+      padding: 1.5rem;
+      text-align: center;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+    }
+    .logo { width: 4.5rem; height: 4.5rem; border-radius: 1rem; }
+    h1 {
+      margin: 1rem 0 1.5rem;
+      font-size: 1.375rem;
+      line-height: 1.3;
+      overflow-wrap: anywhere;
+    }
+    .button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 3rem;
+      padding: 0.75rem 1.25rem;
+      border-radius: 0.75rem;
+      background: var(--accent);
+      color: var(--accent-text);
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .muted { margin: 1.5rem 0 0.75rem; color: var(--muted); }
+    .stores {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.75rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .stores a { display: inline-flex; align-items: center; min-height: 3rem; }
+    .stores img { display: block; height: 3rem; width: auto; max-width: 100%; }
+    .code-line { margin: 1.5rem 0 0; color: var(--muted); }
+    .code {
+      display: inline-block;
+      margin-top: 0.5rem;
+      padding: 0.25rem 0.75rem;
+      color: var(--text);
+      font: 600 1.5rem/1.3 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      letter-spacing: 0.12em;
+      border: 1px solid var(--border);
+      border-radius: 0.5rem;
+      -webkit-user-select: all;
+      user-select: all;
+    }
+    a:focus-visible { outline: 3px solid var(--text); outline-offset: 3px; }
+    [hidden] { display: none !important; }
+  </style>
+</head>
+<body>
+  <main>
+    <img class="logo" src="../../icons/foodprints.png" alt="" width="72" height="72">
+    <h1>You're invited to see someone's food memories on Foodprints.</h1>
+    <a class="button" id="open-app" href="./">Open in Foodprints</a>
+
+    <p class="muted" id="get-app">Don't have the app yet? Get it here:</p>
+    <ul class="stores" aria-labelledby="get-app">
+      <li>
+        <a href="https://apps.apple.com/app/id6780929248" rel="noopener noreferrer" aria-label="Download Foodprints on the App Store">
+          <img src="../../icons/app-store-badge.svg" alt="Download on the App Store">
+        </a>
+      </li>
+      <li>
+        <a href="https://play.google.com/store/apps/details?id=com.companyish.foodprints" rel="noopener noreferrer" aria-label="Get Foodprints on Google Play">
+          <img src="../../icons/google-play-badge.png" alt="Get it on Google Play">
+        </a>
+      </li>
+    </ul>
+
+    <p class="code-line" id="code-line" hidden>After installing, tap the link again, or open Sharing and enter this code: <code class="code" id="code"></code></p>
+  </main>
+  <script>
+    (function () {
+      var ALPHABET = '0123456789ABCDEFGHJKMNPQRSTVWXYZ';
+      var CODE_LENGTH = 8;
+      var PLAY_STORE = 'https://play.google.com/store/apps/details?id=com.companyish.foodprints';
+
+      // The code the sharer sent, read like the app reads it: upper case,
+      // no dashes or spaces, and the look-alikes O, I and L read as 0, 1 and 1.
+      var raw = new URLSearchParams(window.location.search).get('code') || '';
+      var code = raw.toUpperCase().replace(/[\s-]/g, '').replace(/O/g, '0').replace(/[IL]/g, '1');
+      var isWholeCode = code.length === CODE_LENGTH &&
+        code.split('').every(function (character) { return ALPHABET.indexOf(character) !== -1; });
+
+      var linkQuery = isWholeCode ? '?code=' + code : '';
+      var openApp = document.getElementById('open-app');
+      openApp.href = window.location.pathname + linkQuery;
+
+      if (isWholeCode) {
+        document.getElementById('code').textContent = code.slice(0, 4) + '-' + code.slice(4);
+        document.getElementById('code-line').hidden = false;
+      }
+
+      // Safari does not open the app for a link to the page it is already on,
+      // but Chrome on Android can be asked to open the app directly. If the
+      // app is not installed, it goes to the Play Store.
+      if (/Android/i.test(navigator.userAgent)) {
+        openApp.href = 'intent://offleg.com/foodprints/join/' + linkQuery +
+          '#Intent;scheme=https;package=com.companyish.foodprints;S.browser_fallback_url=' +
+          encodeURIComponent(PLAY_STORE) + ';end';
+      }
+    })();
+  </script>
+</body>
+</html>
