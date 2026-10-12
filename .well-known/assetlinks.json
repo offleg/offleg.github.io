@@ -1,0 +1,13 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.companyish.foodprints",
+      "sha256_cert_fingerprints": [
+        "C0:A6:B4:8A:75:44:70:D4:68:8A:AE:EB:26:F3:C0:6C:54:B8:B7:F7:AA:96:08:C0:45:C9:C9:49:81:B8:04:FD",
+        "0C:9C:FF:43:D9:AF:F2:69:62:AF:1B:76:BF:90:E8:37:97:20:D5:8A:A9:62:82:C6:89:BE:C7:DD:78:45:15:5D"
+      ]
+    }
+  }
+]
