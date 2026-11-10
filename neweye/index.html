@@ -3,32 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NewEye - Every AI Session in One Place | OffLeg</title>
-  <meta name="description" content="NewEye puts every AI session about your projects in one place. Find, inspect and continue work from Claude Code, Codex, OpenCode, Cursor and more. Free for Mac, Windows and Linux.">
+  <title>NewEye - Every AI coding session in one place | OffLeg</title>
+  <meta name="description" content="NewEye is a desktop app for Mac, Windows and Linux that shows every AI coding session about a project in one place: Claude Code, Codex, OpenCode, Cursor and imported chats. Read, continue, combine and tidy them from one screen.">
   <link rel="canonical" href="https://offleg.com/neweye/">
   <link rel="icon" type="image/png" href="../icons/neweye.png">
   <link rel="apple-touch-icon" href="../icons/neweye.png">
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#09090a" media="(prefers-color-scheme: dark)">
-
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="OffLeg">
-  <meta property="og:title" content="NewEye - Every AI Session in One Place">
-  <meta property="og:description" content="See every AI session about your projects in one clear window, whichever tool made it. Free for Mac, Windows and Linux.">
+  <meta property="og:title" content="NewEye - Every AI coding session in one place">
+  <meta property="og:description" content="One desktop app that shows every AI coding session about a project: Claude Code, Codex, OpenCode, Cursor and imported chats.">
   <meta property="og:image" content="https://offleg.com/icons/neweye.png">
   <meta property="og:url" content="https://offleg.com/neweye/">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="NewEye - Every AI Session in One Place">
-  <meta name="twitter:description" content="See every AI session about your projects in one clear window, whichever tool made it.">
+  <meta name="twitter:title" content="NewEye - Every AI coding session in one place">
+  <meta name="twitter:description" content="One desktop app that shows every AI coding session about a project: Claude Code, Codex, OpenCode, Cursor and imported chats.">
   <meta name="twitter:image" content="https://offleg.com/icons/neweye.png">
-
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
     "name": "NewEye",
     "url": "https://offleg.com/neweye/",
-    "description": "NewEye is a desktop app that puts every AI session about a project in one place, whichever supported tool made it.",
+    "description": "A desktop app that shows every AI coding session about a project in one place: Claude Code, Codex, OpenCode, Cursor and imported chats.",
     "applicationCategory": "DeveloperApplication",
     "operatingSystem": "macOS, Windows, Linux",
     "downloadUrl": "https://github.com/offleg/neweye-releases/releases/latest",
@@ -36,7 +34,6 @@
     "publisher": { "@type": "Organization", "name": "OffLeg LLP", "url": "https://offleg.com/" }
   }
   </script>
-
   <script>
     (function () {
       var t;
@@ -46,10 +43,18 @@
     })();
   </script>
   <link rel="stylesheet" href="../assets/site.css">
+  <style>
+    .dl-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-top: 20px; }
+    .dl-card { border: 1px solid var(--border, rgba(127,127,127,.3)); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 8px; }
+    .dl-card h3 { margin: 0; font-size: 1.05rem; }
+    .dl-card .small { font-size: .85rem; opacity: .75; }
+    .dl-card .btn { margin-top: auto; justify-content: center; }
+    .dl-version { margin-top: 12px; font-size: .9rem; opacity: .8; }
+    .warn { border-left: 3px solid #c99a2e; padding: 10px 14px; margin-top: 16px; font-size: .95rem; }
+  </style>
 </head>
 <body class="app-neweye">
   <a class="skip-link" href="#main">Skip to content</a>
-
   <header class="site-header">
     <div class="wrap">
       <a class="logo" href="../" aria-label="OffLeg home">
@@ -67,42 +72,45 @@
       </nav>
     </div>
   </header>
-
   <main id="main">
-    <section class="app-hero neweye-hero">
+    <section class="app-hero">
       <div class="wrap">
         <div>
-          <p class="eyebrow">Desktop utility</p>
+          <p class="eyebrow">Developer tools · early access</p>
           <div class="app-title">
             <img src="../icons/neweye.png" alt="NewEye icon">
             <h1>NewEye</h1>
           </div>
-          <p class="tagline">Every AI session about a project, in one place. Find old work, see which tool made it and continue in the right app without hunting through folders or chat lists.</p>
-          <div class="facts"><span class="chip">Free</span><span class="chip">Mac, Windows &amp; Linux</span><span class="chip">Your files stay local</span></div>
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="#download">Download NewEye</a>
-            <a class="btn btn-secondary" href="#how-it-works">See how it works</a>
+          <p class="tagline">Every AI coding session about a project, in one place. NewEye reads what Claude Code, Codex, OpenCode and Cursor keep on your computer, plus chats you export from claude.ai and ChatGPT, and shows them by project. Read any session, continue it from inside NewEye, combine sessions from different tools, and tidy up.</p>
+          <div class="facts"><span class="chip">Mac</span><span class="chip">Windows</span><span class="chip">Linux</span><span class="chip">Free while in testing</span><span class="chip">Runs on your computer only</span></div>
+
+          <div class="dl-grid" id="downloads" role="group" aria-label="Download NewEye">
+            <div class="dl-card">
+              <h3>Mac, Apple chip</h3>
+              <span class="small">M1, M2, M3, M4 and later</span>
+              <a class="btn btn-primary" data-neweye-asset="-arm64.dmg" href="https://github.com/offleg/neweye-releases/releases/latest">Download .dmg</a>
+            </div>
+            <div class="dl-card">
+              <h3>Mac, Intel chip</h3>
+              <span class="small">Macs from before 2020</span>
+              <a class="btn btn-primary" data-neweye-asset="-x64.dmg" href="https://github.com/offleg/neweye-releases/releases/latest">Download .dmg</a>
+            </div>
+            <div class="dl-card">
+              <h3>Windows</h3>
+              <span class="small">Windows 10 and 11, 64-bit</span>
+              <a class="btn btn-primary" data-neweye-asset="-x64.exe" href="https://github.com/offleg/neweye-releases/releases/latest">Download installer</a>
+            </div>
+            <div class="dl-card">
+              <h3>Linux</h3>
+              <span class="small">AppImage, 64-bit</span>
+              <a class="btn btn-primary" data-neweye-asset="-x86_64.AppImage" href="https://github.com/offleg/neweye-releases/releases/latest">Download AppImage</a>
+            </div>
           </div>
-        </div>
-        <div class="desktop-preview" role="img" aria-label="NewEye showing project folders and AI sessions in one window">
-          <div class="desktop-titlebar"><i></i><i></i><i></i><span>NewEye</span></div>
-          <div class="desktop-body">
-            <div class="desktop-rail">
-              <strong>Projects</strong>
-              <span class="active">NewEye</span>
-              <span>Foodprints</span>
-              <span>WordRun</span>
-              <small>PLACES</small>
-              <span>Live now</span>
-              <span>Imported chats</span>
-            </div>
-            <div class="desktop-content">
-              <div class="desktop-heading"><div><small>PROJECT</small><strong>NewEye</strong></div><b>New task</b></div>
-              <div class="session-row"><i class="tool-claude">C</i><div><strong>Desktop release and updates</strong><span>Claude Code · Today, 10:18</span></div><em>Open</em></div>
-              <div class="session-row"><i class="tool-codex">Cx</i><div><strong>Make the session reader faster</strong><span>Codex · Yesterday</span></div><em>Open</em></div>
-              <div class="session-row"><i class="tool-open">O</i><div><strong>Toolbox layout review</strong><span>OpenCode · 8 Nov</span></div><em>Open</em></div>
-              <div class="session-row"><i class="tool-chat">Ch</i><div><strong>Early product notes</strong><span>Imported chat · 7 Nov</span></div><em>View</em></div>
-            </div>
+          <p class="dl-version">Newest version: <strong data-neweye-version>latest version</strong> · All versions: <a href="https://github.com/offleg/neweye-releases/releases">github.com/offleg/neweye-releases</a></p>
+
+          <div class="warn">
+            <strong>First time opening.</strong> NewEye is not signed yet, so your computer will warn you once.
+            On a Mac: right-click the app and choose <em>Open</em>, then <em>Open</em> again. On Windows: click <em>More info</em>, then <em>Run anyway</em>.
           </div>
         </div>
       </div>
@@ -111,80 +119,89 @@
     <section class="section section-soft">
       <div class="wrap">
         <div class="section-head">
-          <h2>Your work, whichever tool made it</h2>
-          <p>NewEye reads the session records already on your computer and turns them into one project view. It supports Claude Code, Claude Cowork, Codex, OpenCode, Cursor, Antigravity, plus chats imported from claude.ai and ChatGPT.</p>
+          <h2>What it does</h2>
+          <p>AI coding tools each keep their own history in their own place. NewEye puts them side by side, by project, so you always know what was done, by which tool, and can pick up where you left off.</p>
         </div>
         <div class="steps">
-          <div class="step"><span class="num">1</span><h3>One project view</h3><p>Open a project folder and see its sessions together, even when they came from different tools.</p></div>
-          <div class="step"><span class="num">2</span><h3>Useful details</h3><p>See the tool, model, device, date and storage place, along with whether a session can be continued.</p></div>
-          <div class="step"><span class="num">3</span><h3>Private by design</h3><p>NewEye reads local records to build its view. It does not upload your project files or change another tool's files.</p></div>
+          <div class="step"><span class="num">1</span><h3>See everything</h3><p>Open a project and see every session about it: Claude Code, Codex, OpenCode, Cursor, and chats imported from claude.ai or ChatGPT. Named from what was said, newest first.</p></div>
+          <div class="step"><span class="num">2</span><h3>Continue from here</h3><p>Type into a Claude Code, Codex or OpenCode session right inside NewEye, attach files, answer the tool's permission questions, and run several tools in tabs. Switch to another tool when one runs out.</p></div>
+          <div class="step"><span class="num">3</span><h3>Tidy and share memory</h3><p>Combine sessions from different tools into one thread, move old ones to the trash, and feed everything into a shared memory so every tool knows what the others did.</p></div>
+          <div class="step"><span class="num">4</span><h3>Know your toolbox</h3><p>See what each tool can do on your computer, which helpers to install and where, and what would make your setup better.</p></div>
         </div>
-      </div>
-    </section>
-
-    <section class="section" id="how-it-works">
-      <div class="wrap">
-        <div class="section-head"><h2>How it works</h2></div>
-        <div class="steps">
-          <div class="step"><span class="num">1</span><h3>Let NewEye look</h3><p>A short first-time setup shows exactly which local folders NewEye needs to read and why.</p></div>
-          <div class="step"><span class="num">2</span><h3>Pick a project</h3><p>Your projects appear like folders. Open one to see all its coding sessions and imported chats together.</p></div>
-          <div class="step"><span class="num">3</span><h3>Continue the work</h3><p>Open a session in the tool that made it, or start new work with Claude Code or Codex from NewEye.</p></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section section-soft" id="download">
-      <div class="wrap">
-        <div class="section-head">
-          <h2>Download NewEye</h2>
-          <p>NewEye <span data-neweye-version>latest version</span> is free. Choose the download button that matches your computer.</p>
-        </div>
-        <div class="download-grid">
-          <a class="download-card" href="https://github.com/offleg/neweye-releases/releases/latest" data-neweye-asset="-arm64.dmg"><strong>Download for Mac</strong><span>Apple chip, M1 or newer · arm64.dmg</span></a>
-          <a class="download-card" href="https://github.com/offleg/neweye-releases/releases/latest" data-neweye-asset="-x64.dmg"><strong>Download for Mac</strong><span>Intel chip · x64.dmg</span></a>
-          <a class="download-card" href="https://github.com/offleg/neweye-releases/releases/latest" data-neweye-asset="-x64.exe"><strong>Download for Windows</strong><span>64-bit · x64.exe</span></a>
-          <a class="download-card" href="https://github.com/offleg/neweye-releases/releases/latest" data-neweye-asset="-x86_64.AppImage"><strong>Download for Linux</strong><span>64-bit · x86_64.AppImage</span></a>
-        </div>
-        <p class="download-help">Not sure which Mac you have? Open the Apple menu and choose <strong>About This Mac</strong>.</p>
       </div>
     </section>
 
     <section class="section" id="faq">
       <div class="wrap faq-layout">
-        <div class="section-head"><h2>Questions</h2><p>Anything else? Email <a href="mailto:contact@offleg.com">contact@offleg.com</a>.</p></div>
+        <div class="section-head">
+          <h2>Questions</h2>
+          <p>Found a problem? Email <a href="mailto:contact@offleg.com">contact@offleg.com</a> and attach the log file (Help menu, "Open log file").</p>
+        </div>
         <div class="faq">
-          <details open><summary>Is NewEye free?</summary><p>Yes. NewEye is free to download and use on Mac, Windows and Linux.</p></details>
-          <details><summary>Does NewEye send my projects to a server?</summary><p>No. NewEye reads session records already on your computer. Your project files stay on your computer.</p></details>
-          <details><summary>Which tools can it find?</summary><p>NewEye can list work from Claude Code, Claude Cowork, Codex, OpenCode, Cursor and Antigravity. You can also import chat exports from claude.ai and ChatGPT.</p></details>
-          <details><summary>Can I continue a session from NewEye?</summary><p>When the original tool supports it, yes. NewEye opens the session in the tool that made it. It can also start new Claude Code and Codex work.</p></details>
-          <details><summary>Does it update itself?</summary><p>Yes. NewEye checks for a newer version after it starts and downloads updates in the background.</p></details>
+          <details open>
+            <summary>Does NewEye send my code or chats anywhere?</summary>
+            <p>No. NewEye runs on your computer and has no server of its own. It reads the files your tools already keep and shows them to you. The only thing it downloads is its own list of helper tools.</p>
+          </details>
+          <details>
+            <summary>Do I need an account?</summary>
+            <p>No. NewEye uses the sign-ins your tools already have. If a tool is not signed in, NewEye says so and opens that tool's own sign-in.</p>
+          </details>
+          <details>
+            <summary>Which tools does it read?</summary>
+            <p>Claude Code, Codex, OpenCode and Cursor on this computer, Claude Code cloud sessions, and chats exported from claude.ai and ChatGPT. It can type into Claude Code, Codex and OpenCode.</p>
+          </details>
+          <details>
+            <summary>Where does it keep its own data?</summary>
+            <p>In your user's application folder: Library/Application Support/NewEye on a Mac, AppData\Roaming\NewEye on Windows. Your tools' own files are never changed. Deleting a session in NewEye moves it to NewEye's trash first.</p>
+          </details>
+          <details>
+            <summary>Why does my computer warn me when I open it?</summary>
+            <p>Early-access builds are not signed with Apple or Microsoft yet, so the first open shows a warning. Right-click and Open on a Mac; More info, then Run anyway on Windows. Signed builds come later.</p>
+          </details>
         </div>
       </div>
     </section>
 
-    <section class="section">
+    <section class="section section-soft">
       <div class="wrap">
         <div class="section-head"><h2>More from OffLeg</h2></div>
         <div class="more-grid">
           <a class="more-card" href="../wordrun/"><img src="../icons/wordrun.png" alt=""><div><strong>WordRun!</strong><span>The real-time multiplayer word game.</span></div><span class="arrow" aria-hidden="true">&rarr;</span></a>
-          <a class="more-card" href="../foodprints/"><img src="../icons/foodprints.png" alt=""><div><strong>Foodprints</strong><span>Great food deserves to be remembered.</span></div><span class="arrow" aria-hidden="true">&rarr;</span></a>
-          <a class="more-card" href="../easyworkoutlogger/"><img src="../icons/easyworkoutlogger.png" alt=""><div><strong>Easy Workout Logger</strong><span>A simple gym log: weight, reps, save.</span></div><span class="arrow" aria-hidden="true">&rarr;</span></a>
+          <a class="more-card" href="../foodprints/"><img src="../icons/foodprints.png" alt=""><div><strong>Foodprints: Food Memories</strong><span>Great food deserves to be remembered.</span></div><span class="arrow" aria-hidden="true">&rarr;</span></a>
+          <a class="more-card" href="../easyworkoutlogger/"><img src="../icons/easyworkoutlogger.png" alt=""><div><strong>Easy Workout Logger</strong><span>A simple gym log.</span></div><span class="arrow" aria-hidden="true">&rarr;</span></a>
         </div>
       </div>
     </section>
   </main>
-
   <footer class="site-footer">
     <div class="wrap">
       <div class="footer-grid">
-        <div class="footer-brand"><a class="logo" href="../"><img src="../icons/offleg.png" data-logo="../icons/" alt=""><span>OffLeg LLP</span></a><p>Software, off the legacy track.</p></div>
-        <div><h4>Apps</h4><ul><li><a href="../neweye/">NewEye</a></li><li><a href="../wordrun/">WordRun!</a></li><li><a href="../foodprints/">Foodprints</a></li><li><a href="../easyworkoutlogger/">Easy Workout Logger</a></li></ul></div>
-        <div><h4>Company</h4><ul><li><a href="../#about">About</a></li><li><a href="mailto:contact@offleg.com">contact@offleg.com</a></li></ul></div>
+        <div class="footer-brand">
+          <a class="logo" href="../"><img src="../icons/offleg.png" data-logo="../icons/" alt=""><span>OffLeg LLP</span></a>
+          <p>Software, off the legacy track.</p>
+        </div>
+        <div>
+          <h4>Apps</h4>
+          <ul>
+            <li><a href="../wordrun/">WordRun!</a></li>
+            <li><a href="../foodprints/">Foodprints</a></li>
+            <li><a href="../easyworkoutlogger/">Easy Workout Logger</a></li>
+            <li><a href="./">NewEye</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Company</h4>
+          <ul>
+            <li><a href="../#about">About</a></li>
+            <li><a href="mailto:contact@offleg.com">contact@offleg.com</a></li>
+          </ul>
+        </div>
       </div>
-      <div class="footer-bottom"><span>&copy; <span data-year>2026</span> OffLeg LLP. All rights reserved.</span></div>
+      <div class="footer-bottom">
+        <span>&copy; <span data-year>2026</span> OffLeg LLP. All rights reserved.</span>
+      </div>
     </div>
   </footer>
-
   <script src="../assets/site.js"></script>
 </body>
 </html>
